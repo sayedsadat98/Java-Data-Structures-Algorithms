@@ -1,12 +1,12 @@
 package Arrays;
 
-//Print all the subarrays (Brute force)
+//Print all the subarrays (Brute force - O(n^3))
 
 public class SubArray {
     public static void main(String[] args) {
-        int[] arr1 = {10, 20, 30, 40, 50, 60, 70, 66, 88, 99};
+        int[] arr = {-2, 3, 4, -1, 5, -12, 6, 1, 3};
 
-        int[] arr = {-1, 4, 7, 2};
+        int[] arr1 = {-1, 4, 7, 2};
         int n = arr.length;
         int prevSum = Integer.MIN_VALUE;
         int currentSum;

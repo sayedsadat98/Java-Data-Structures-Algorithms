@@ -6,29 +6,52 @@ import java.util.LinkedList;
 public class DirectChaining {
 
     LinkedList<String>[] hashTable;
-    int maxChainSize = 5;
+    int maxChainLimit = 5;
 
-    public DirectChaining(int size) {
-        hashTable = new LinkedList[size];
-
+    DirectChaining(int maxSize) {
+        hashTable = new LinkedList[maxSize];
     }
 
-    public int hashFunction(String word, int cellNumber) {
-        char[] wordArray = word.toCharArray();
-        int sum = 0;
-        for (int i = 0; i < wordArray.length; i++) {
-            sum += wordArray[i];
+    public int modASCII(String word, int cell) {
+        int total = 0;
+        for (int i = 0; i < word.length(); i++) {
+            int ch = word.charAt(i);
+            total += ch;
         }
-        return sum % cellNumber;
+
+        return total % cell;
     }
 
-    public void HashTable(String word) {
-        int newIndex = hashFunction(word, hashTable.length);
+    public void insertHashTable(String word) {
+        int newIndex = modASCII(word, hashTable.length);
+
         if (hashTable[newIndex] == null) {
             hashTable[newIndex] = new LinkedList<String>();
             hashTable[newIndex].add(word);
-        } else {
+        }
+
+        else{
             hashTable[newIndex].add(word);
         }
     }
+
+    public void displayHashTable() {
+        if (hashTable == null) {
+            System.out.println("EMPTY");
+            return;
+        }
+        else {
+
+        }
+    }
+
+    public static void main(String[] args) {
+        DirectChaining dc = new DirectChaining(5);
+        int ans = dc.modASCII("ABCD", 24);
+        System.out.println(ans);
+
+    }
+
+
+
 }
