@@ -12,19 +12,19 @@ class Node {
 
 class LinkedList {
     public Node head;
+    public int size;
 
     public LinkedList() {
-        this.head = null;
+        head = null;
+        size = 0;
+    }
+
+    public Node getHead() {
+        return head;
     }
 
     public int length() {
-        int length = 0;
-        Node current = head;
-        while (current != null) {
-            length++;
-            current = current.next;
-        }
-        return length;
+        return size;
     }
 
     public void printList() {
@@ -38,8 +38,18 @@ class LinkedList {
         System.out.println();
     }
 
+    public Node findTail() {
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        return current;
+    }
+
     public void insert(int data, int position) {
+
         Node newNode = new Node(data);
+        size++;
         if (head == null) {
             head = newNode;
             return;
@@ -52,12 +62,7 @@ class LinkedList {
         }
         // insert at tail
         else if (position >= length()) {
-            Node tail = head;
-            while (tail.next != null) {
-                tail = tail.next;
-            }
-            tail.next = newNode;
-
+            findTail().next = newNode;
         }
         // insert in the middle
         else {
@@ -91,6 +96,35 @@ class LinkedList {
         }
         prev.next = nextNode;
     }
+
+    public void remove(int position) {
+        Node current = head;
+        while (current == null) {
+            return;
+        }
+        if (position == 0) {
+            head = head.next;
+        }
+        int counter = 0;
+        while (counter < position - 1) {
+            current = current.next;
+            counter++;
+        }
+        current.next = current.next.next;
+
+    }
+
+    public boolean search(int data) {
+        Node current = head;
+        while (current.next != null) {
+            if (current.data == data) {
+                return true;
+            }
+            current = current.next;
+
+        }
+        return false;
+    }
 }
 
 public class LinkedListMain {
@@ -102,12 +136,14 @@ public class LinkedListMain {
         ll.insert(4, 3);
         ll.insert(5, 4);
         ll.insert(-1, 2);
+        System.out.println("Length of the List before deletion: " + ll.length());
         ll.printList();
+        System.out.println("Previous Tail: " + ll.findTail().data);
         ll.delete(-1);
 
+        System.out.println("Length of the List after deletion: " + ll.length());
         ll.printList();
-        System.out.println("Length of the List: " + ll.length());
-
+        System.out.println("New Tail: " + ll.findTail().data);
         System.out.println("Operations Completed!");
     }
 }
