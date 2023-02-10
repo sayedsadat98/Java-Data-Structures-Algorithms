@@ -1,5 +1,7 @@
 package Trees;
 
+import com.sun.source.tree.Tree;
+
 import java.util.*;
 
 class TreeNode {
@@ -144,6 +146,50 @@ public class LinkedListTree {
         return allNodes.get(allNodes.size() - 1);
     }
 
+    public void createMap(){
+        TreeNode current = root;
+        Queue<TreeNode> q = new LinkedList<>();
+        Map<String, List<String>> map = new HashMap<>();
+        q.offer(current);
+
+        while (!q.isEmpty()){
+            current = q.poll();
+            List<String> list = new ArrayList<>();
+            map.put(current.value,list);
+
+            if(current.left != null) {
+                q.offer(current.left);
+                list.add(current.left.value);
+            }
+
+            if(current.right !=null) {
+                q.offer(current.right);
+                list.add(current.right.value);
+            }
+
+
+
+        }
+        Iterator<String> it = map.keySet().iterator();
+        List<List<String>> ans = new ArrayList<>();
+
+        while (it.hasNext()) {
+            if ((map.get(it.next())).size() == 0) {
+                it.remove();
+            }
+        }
+        map.forEach((k,v)->{
+            List<String> curr = new ArrayList<>();
+            curr.add(k);
+            for (int i = 0; i < map.get(k).size(); i++) {
+                curr.add(map.get(k).get(i));
+            }
+            ans.add(curr);
+        });
+        System.out.println(ans);
+        System.out.println(map);
+    }
+
     public String getAndDeleteDeepestNode() {
         TreeNode targetNode = getDeepestNode();
         TreeNode current = root;
@@ -198,6 +244,7 @@ public class LinkedListTree {
         tree.insert("E");
         tree.insert("F");
         System.out.println(tree.levelOrder());
+        tree.createMap();
         tree.deleteNode("B");
         System.out.println(tree.levelOrder());
 
